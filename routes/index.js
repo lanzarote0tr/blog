@@ -9,8 +9,7 @@ router.get('/', async function(req, res, next) {
     const [result] = await pool.query("SELECT * FROM posts");
     res.render('index', { title: 'Express', posts: result });
   } catch(err) {
-    console.error('Query Error: ', err);
-    next(createError(500));
+    next(err);
   }
 });
 

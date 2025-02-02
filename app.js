@@ -32,6 +32,14 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
+  switch(err.status) {
+    case 404:
+      res.locals.title = 'Page Not Found';
+      break;
+    case 500:
+    // default:
+      res.locals.title = 'Internal Server Error';
+  }
 
   // render the error page
   res.status(err.status || 500);
