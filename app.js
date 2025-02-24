@@ -1,13 +1,13 @@
 import createError from 'http-errors';
 import express from 'express';
 import path from 'path';
-import fileURLToPath from 'url';
-import dirname from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import dotenv from 'dotenv';
 import { Client, Intents } from 'discord.js';
-import verifyKeyMiddleware from 'discord-interactions';
+import { verifyKeyMiddleware } from 'discord-interactions';
 
 import onMessageCreate from './utils/discordapp.js';
 
