@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function callChatGPT(message_contents) {
+async function callChatGPT(message_contents) {
   const apiKey = process.env.OPENAI_API_KEY;
   const url = "https://api.openai.com/v1/chat/completions";
 
@@ -28,7 +28,7 @@ export async function callChatGPT(message_contents) {
   }
 }
 
-export async function getFullTextFromReadableStream(readableStream) {
+async function getFullTextFromReadableStream(readableStream) {
   const reader = readableStream.getReader();
   let fullText = '';
   let done = false;
@@ -44,7 +44,7 @@ export async function getFullTextFromReadableStream(readableStream) {
   return fullText;
 }
 
-export async function DiscordRequest(endpoint, options) {
+async function DiscordRequest(endpoint, options) {
   // append endpoint to root API URL
   const url = 'https://discord.com/api/v10/' + endpoint;
   // Stringify payloads
@@ -54,7 +54,7 @@ export async function DiscordRequest(endpoint, options) {
     headers: {
       Authorization: `Bot ${process.env.DISCORD_TOKEN}`,
       'Content-Type': 'application/json; charset=UTF-8',
-      'User-Agent': 'DiscordBot (https://github.com/discord/discord-example-app, 1.0.0)',
+      'User-Agent': 'DiscordBot (https://github.com/ethanwoncho/blog, 1.0.0)',
     },
     ...options
   });
@@ -68,13 +68,44 @@ export async function DiscordRequest(endpoint, options) {
   return res;
 }
 
-export async function InstallGlobalCommands(appId, commands) {
+async function InstallGlobalCommands(appId, commands) {
   // API endpoint to overwrite global commands
   const endpoint = `applications/${appId}/commands`;
 
   try {
     // This is calling the bulk overwrite endpoint: https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands
     await DiscordRequest(endpoint, { method: 'PUT', body: commands });
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export async function onMessageCreate(message) { // Listen for the "messageCreate" event
+  // Check if message is from the bot itself to avoid infinite loops
+  if (message.author.bot || message.channelId != 1331901049942048819) return;
+  console.log(`got a message!: ${message.content} `);
+  global.chatHistory.push({
+    "role":"user",
+    "content":[{ "type":"text", "text":message.content }]
+  });
+  const assistant_say = await callChatGPT(global.chatHistory);
+  global.chatHistory.push({
+    "role":"assistant",
+    "content":[{ "type":"text", "text":assistant_say }]
+  });
+  // SEND IT!!!
+  const endpoint = `channels/1331901049942048819/messages`;
+  try {
+    // This is calling the bulk overwrite endpoint: https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands
+    const safeAssistantSay = String(assistant_say);
+    const rst = await DiscordRequest(endpoint, { 
+      method: 'POST', 
+      body: {
+        content: safeAssistantSay, // This should be a string, not an object
+        tts: false // Add this directly to the body
+      }
+    });
+    console.log(rst);
   } catch (err) {
     console.error(err);
   }

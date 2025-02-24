@@ -1,15 +1,15 @@
 import createError from 'http-errors';
 import express from 'express';
 import path from 'path';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import fileURLToPath from 'url';
+import dirname from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import dotenv from 'dotenv';
 import { Client, Intents } from 'discord.js';
-import { InteractionType, InteractionResponseType, verifyKeyMiddleware } from 'discord-interactions';
+import verifyKeyMiddleware from 'discord-interactions';
 
-import { DiscordRequest, callChatGPT } from './utils/utils.js';
+import onMessageCreate from './utils/discordapp.js';
 
 import indexRouter from './routes/index.js';
 import interactionsRouter from './routes/interactions.js';
@@ -32,9 +32,8 @@ global.chatHistory = chatDefault;
 discordClient.on('ready', () => {
   console.log(`Logged in as ${discordClient.user.tag}!`);
 });
-
-// discord routing
-app.use('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), interactionsRouter);
+discordClient.on("messageCreate", onMessageCreate);
+discordClient.login(process.env.DISCORD_TOKEN);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -46,40 +45,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Routing
 app.use('/', indexRouter);
+app.use('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), interactionsRouter);
 
-discordClient.on("messageCreate", async function (message) { // Listen for the "messageCreate" event
-  // Check if message is from the bot itself to avoid infinite loops
-  if (message.author.bot || message.channelId != 1331901049942048819) return;
-  console.log(`got a message!: ${message.content} `);
-  global.chatHistory.push({
-    "role":"user",
-    "content":[{ "type":"text", "text":message.content }]
-  });
-  const assistant_say = await callChatGPT(global.chatHistory);
-  global.chatHistory.push({
-    "role":"assistant",
-    "content":[{ "type":"text", "text":assistant_say }]
-  });
-  // SEND IT!!!
-  const endpoint = `channels/1331901049942048819/messages`;
-  try {
-    // This is calling the bulk overwrite endpoint: https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands
-    const safeAssistantSay = String(assistant_say);
-    const rst = await DiscordRequest(endpoint, { 
-      method: 'POST', 
-      body: {
-        content: safeAssistantSay, // This should be a string, not an object
-        tts: false // Add this directly to the body
-      }
-    });
-    console.log(rst);
-  } catch (err) {
-    console.error(err);
-  }
-});
-
-discordClient.login(process.env.DISCORD_TOKEN);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
