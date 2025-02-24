@@ -1,7 +1,7 @@
-var express = require('express');
+import express from 'express';
 var router = express.Router();
 
-const pool = require('../utils/connectdb');
+import pool from '../utils/connectdb.js';
 
 /* GET home page. */
 router.get('/', async function(req, res, next) {
@@ -13,4 +13,4 @@ router.get('/', async function(req, res, next) {
   }
 });
 
-module.exports = router;
+export default router;

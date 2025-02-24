@@ -1,16 +1,24 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-require('dotenv').config();
-const { Client, Intents } = require('discord.js');
-const { InteractionType, InteractionResponseType, verifyKeyMiddleware } = require('discord-interactions');
+import createError from 'http-errors';
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
+import dotenv from 'dotenv';
+import { Client, Intents } from 'discord.js';
+import { InteractionType, InteractionResponseType, verifyKeyMiddleware } from 'discord-interactions';
 
-var { DiscordRequest, callChatGPT } = require('./utils/utils');
+import { DiscordRequest, callChatGPT } from './utils/utils.js';
 
-var indexRouter = require('./routes/index');
-var interactionsRouter = require('./routes/interactions');
+import indexRouter from './routes/index.js';
+import interactionsRouter from './routes/interactions.js';
+
+// __dirname replacement
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+dotenv.config();
 
 var app = express();
 
@@ -39,11 +47,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-
-
-discordClient.on('ready', () => {
-  console.log(`Logged in as ${discordClient.user.tag}!`);
-});
 
 discordClient.on("messageCreate", async function (message) { // Listen for the "messageCreate" event
   // Check if message is from the bot itself to avoid infinite loops
@@ -102,4 +105,4 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+export default app;

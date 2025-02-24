@@ -1,6 +1,6 @@
-var express = require('express');
+import express from 'express';
 var router = express.Router();
-const { InteractionType, InteractionResponseType } = require('discord-interactions');
+import { InteractionType, InteractionResponseType } from 'discord-interactions';
 
 router.post('/', async function(req, res, next) {
   console.log(global.chatHistory);
@@ -36,4 +36,4 @@ router.post('/', async function(req, res, next) {
   return res.status(400).json({ error: 'unknown interaction type' });
 });
 
-module.exports = router;
+export default router;
