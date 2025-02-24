@@ -80,7 +80,7 @@ async function InstallGlobalCommands(appId, commands) {
   }
 }
 
-export async function onMessageCreate(message) { // Listen for the "messageCreate" event
+async function onMessageCreate(message) { // Listen for the "messageCreate" event
   // Check if message is from the bot itself to avoid infinite loops
   if (message.author.bot || message.channelId != 1331901049942048819) return;
   console.log(`got a message!: ${message.content} `);
@@ -110,3 +110,5 @@ export async function onMessageCreate(message) { // Listen for the "messageCreat
     console.error(err);
   }
 }
+
+export default onMessageCreate;
