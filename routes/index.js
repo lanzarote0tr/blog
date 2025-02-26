@@ -11,7 +11,7 @@ router.get('/', async function(req, res, next) {
   // } catch(err) {
   //   next(err);
   // }
-  res.status(200).send("김보민 바보");
+  res.status(200).send("김보민천재");
 });
 
 export default router;
