@@ -47,7 +47,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routing
 app.use('/', indexRouter);
-app.use('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), interactionsRouter);
+app.use('/interactions', verifyKeyMiddleware(process.env.DISCORD_PUBLIC_KEY), interactionsRouter);
 
 
 // catch 404 and forward to error handler

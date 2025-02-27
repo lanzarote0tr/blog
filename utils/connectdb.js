@@ -10,5 +10,9 @@ const pool = mysql.createPool({
   queueLimit: 0
 });
 
-export default pool;
+(async () => {
+  const [rows] = await pool.query("SELECT NOW()");
+  console.log("Connected to MySQL:", rows);
+})();
 
+export default pool;
