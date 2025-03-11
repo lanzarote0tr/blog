@@ -13,6 +13,7 @@ import onMessageCreate from './utils/discordapp.js';
 
 import indexRouter from './routes/index.js';
 import interactionsRouter from './routes/interactions.js';
+import blogRouter from './routes/blog.js';
 
 // __dirname replacement
 const __filename = fileURLToPath(import.meta.url);
@@ -48,6 +49,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Routing
 app.use('/', indexRouter);
 app.use('/interactions', verifyKeyMiddleware(process.env.DISCORD_PUBLIC_KEY), interactionsRouter);
+app.use('/blog', blogRouter);
 
 
 // catch 404 and forward to error handler
