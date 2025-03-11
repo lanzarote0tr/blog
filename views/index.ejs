@@ -1,27 +1,31 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <table>
-      <tbody>
-        <% posts.forEach(data =>  { %>
-          <tr>
-            <td>
-              <a href="/viewpost?postid=<%=data.n%>">
-                <%=data.title%>
-              </a>
-            </td>
-            <td>
-              <%=data.body%>
-            </td>
-          </tr>
-        <% }) %>
-      </tbody>
-    </table>
-  </body>
+<head>
+  <title>Hello, I'm Ethan Cho.</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+  <div id="banner">
+      <img src="/images/MUNZIE.png" alt="" id="banner-img">
+      <a href="/" id="mainpage-link">Hello</a>
+      <a href="/blog" id="blogpage-link">Blog</a>
+  </div>
+  <div id="heading">
+    <h1>Hi! I'm Ethan Cho</h1>
+    <p>Welcome to my site. I'm a 16 years old generalist compsci student. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu magna nulla. Quisque lobortis ipsum eget est ornare, id tincidunt risus tristique. Nunc sit amet diam nisl. Fusce at mi a magna interdum congue. Aliquam laoreet eget odio eget pellentesque. Mauris vel nunc ac arcu pretium molestie. Etiam et fermentum dui, ac suscipit lectus. Donec scelerisque libero sed sapien mollis maximus. </p>
+    <span>
+      <a href="https://github.com/ethanwoncho", id="github-button">
+        <button>GITHUB</button>
+      </a>
+      <a href="mailto:trillionwon@dimigo.hs.kr", id="email-button">
+        <button>EMAIL</button>
+      </a>
+    </span>
+  </div>
+  <div id="dimigo">
+    <h2>Korea Digital Media High School</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu magna nulla. Quisque lobortis ipsum eget est ornare, id tincidunt risus tristique. Nunc sit amet diam nisl. Fusce at mi a magna interdum congue. Aliquam laoreet eget odio eget pellentesque. Mauris vel nunc ac arcu pretium molestie. Etiam et fermentum dui, ac suscipit lectus. Donec scelerisque libero sed sapien mollis maximus.</p>
+  </div>
+
+</body>
 </html>
