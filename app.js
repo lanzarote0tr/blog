@@ -67,7 +67,7 @@ app.use(function(err, req, res, next) {
       res.locals.title = 'Page Not Found';
       break;
     case 500:
-    // default:
+    default:
       res.locals.title = 'Internal Server Error';
   }
 
