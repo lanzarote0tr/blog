@@ -61,7 +61,7 @@ async function DiscordRequest(endpoint, options) {
   // throw API errors
   if (!res.ok) {
     const data = await res.json();
-    console.log(res.status);
+    //console.log(res.status);
     throw new Error(JSON.stringify(data));
   }
   // return original response
@@ -105,7 +105,7 @@ async function onMessageCreate(message) { // Listen for the "messageCreate" even
         tts: false // Add this directly to the body
       }
     });
-    console.log(rst);
+    // console.log(rst);
   } catch (err) {
     console.error(err);
   }
