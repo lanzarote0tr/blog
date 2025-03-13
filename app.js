@@ -35,6 +35,7 @@ discordClient.on('ready', () => {
 });
 discordClient.on("messageCreate", onMessageCreate);
 discordClient.login(process.env.DISCORD_TOKEN);
+app.use('/interactions', verifyKeyMiddleware(process.env.DISCORD_PUBLIC_KEY), interactionsRouter);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -48,7 +49,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routing
 app.use('/', indexRouter);
-app.use('/interactions', verifyKeyMiddleware(process.env.DISCORD_PUBLIC_KEY), interactionsRouter);
 app.use('/blog', blogRouter);
 
 
