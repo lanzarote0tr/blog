@@ -6,13 +6,8 @@ import { dirname } from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import dotenv from 'dotenv';
-import { Client, Intents } from 'discord.js';
-import { verifyKeyMiddleware } from 'discord-interactions';
-
-import onMessageCreate from './utils/discordapp.js';
 
 import indexRouter from './routes/index.js';
-import interactionsRouter from './routes/interactions.js';
 import blogRouter from './routes/blog.js';
 
 // __dirname replacement
@@ -22,20 +17,6 @@ const __dirname = dirname(__filename);
 dotenv.config();
 
 var app = express();
-
-// discord setup
-const discordClient = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
-global.chatDefault = [{
-  "role":"developer",
-  "content": [{ "type":"text", "text":"너는 \"한국디지털미디어고등학교\"에 다니는 해킹방어과 1학년 학생들을 위한 어시스턴트이다." }]
-}];
-global.chatHistory = chatDefault;
-discordClient.on('ready', () => {
-  console.log(`Logged in as ${discordClient.user.tag}!`);
-});
-discordClient.on("messageCreate", onMessageCreate);
-discordClient.login(process.env.DISCORD_TOKEN);
-app.use('/interactions', verifyKeyMiddleware(process.env.DISCORD_PUBLIC_KEY), interactionsRouter);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
