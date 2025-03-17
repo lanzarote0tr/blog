@@ -10,6 +10,28 @@
       <a href="/" id="mainpage-link">Hello</a>
       <a href="/blog" id="blogpage-link">Blog</a>
   </div>
-  <%= posts %>
+  <div class="postList">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">제목</th>
+          <th scope="col">등록일</th>
+        </tr>
+      </thead>
+      <% posts.forEach(data => { %>
+        <tr>
+          <td class="textLeftAlign">
+            <a href="/viewpost?postid=<%=data.PostID%>">
+              <%=data.Title%>
+            </a>
+          </td>
+          <td>
+            <% //data.Created_at = helper.formatDate(data.Created_at); %>
+            <%=data.Created_at %>
+          </td>
+        </tr>
+      <% }); %>
+    </table>
+  </div>
 </body>
 </html>
