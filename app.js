@@ -4,7 +4,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import cookieParser from "cookie-parser";
-import "morgan";
+import morgan from "morgan";
 import dotenv from "dotenv";
 import rateLimit from "express-rate-limit";
 
