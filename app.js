@@ -4,7 +4,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import cookieParser from "cookie-parser";
-import morgan from "morgan";
+import logger from "morgan";
 import dotenv from "dotenv";
 import rateLimit from "express-rate-limit";
 
@@ -29,7 +29,7 @@ const limiter = rateLimit({
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-app.use(morgan(":remote-addr - :remote-user [:date[clf]] \":method :url HTTP/:http-version\" :status :res[content-length] \":referrer\" \":user-agent\"", {
+app.use(logger(":remote-addr - :remote-user [:date[clf]] \":method :url HTTP/:http-version\" :status :res[content-length] \":referrer\" \":user-agent\"", {
   stream: process.stdout,
 }));
 
