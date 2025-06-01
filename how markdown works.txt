@@ -1,0 +1,91 @@
+mysql> CREATE TABLE Posts (
+    -> PostID int NOT NULL UNIQUE,
+    -> Title varchar(255) NOT NULL,
+    -> Content TEXT NOT NULL,
+    -> Author_id INT NOT NULL,
+    -> Created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    -> Updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    -> );
+ 
+INSERT INTO blog_posts (title, content, author_id) 
+VALUES 
+('Second Post', 'This is another blog entry.', 1),
+('Third Post', 'Yet another interesting post.', 2);
+
+# TITLE
+<h1>TITLE</h1>
+## HEADING
+### ANOTHER HEADING
+... 6 pounds
+
+Normal text.V
+Same paragraph
+<p>Normal text. Same paragraph</p>
+
+Normal text.VV
+New line.
+<p>Normal text<br>New line.</p>
+
+\\text styling\\
+
+*italics*
+**bold**
+***both bold and italics***
+~~crossed off~~
+==highlight==
+
+base^(superscript)
+base_(subscript)
+
+> quote
+> continued quote
+
+paragraph
+
+---
+
+paragraph
+
+
+1. Item 1
+2. Item 2
+2. Item 3
+2. Item 4
+1. Item 1
+1. Item 1
+
+a. Item a
+b. Item b
+b. Item c
+
+A. Item A
+B. Item B
+
+- Unordered List
+- Unordered List
+    - Nested List
+
+This is `code`
+
+```js
+const a = 10;
+let y = 8;
+```
+
+\\link\\
+[textforlink](https://example.com/)
+<https://example.com>
+
+\\image\\
+![Alt text](link-to-google-logo)
+
+
+
+| Col 1 | Col 2  |
+| ----- | ------ |
+| This  | is     |
+| an | example |
+| table | with |
+|two|columns|
+
+
