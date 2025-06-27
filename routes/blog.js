@@ -12,4 +12,17 @@ router.get('/', async function(req, res, next) {
   }
 });
 
+router.get('/viewpost/:id', async function(req, res, next) {
+  const postId = req.params.id;
+  try {
+    const [result] = await pool.query("SELECT * FROM Posts WHERE PostID = ?", [postId]);
+    if (result.length === 0) {
+      return res.status(404).render('error', { message: 'Post not found', status: 404 });
+    }
+    res.render('viewpost', { post: result[0] });
+  } catch(err) {
+    next(err);
+  }
+});
+
 export default router;
