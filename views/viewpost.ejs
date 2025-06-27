@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Post List.</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+  <div id="banner">
+      <img src="/images/MUNZIE.png" alt="" id="banner-img">
+      <a href="/" id="mainpage-link">Hello</a>
+      <a href="/blog" id="blogpage-link">Blog</a>
+  </div>
+  <div class="post">
+    <h1><%= post.Title %></h1>
+    <p>등록일: <%= post.Created_at %></p>
+    <p><%= post.Content %></p>
+  </div>
+</body>
+</html>
