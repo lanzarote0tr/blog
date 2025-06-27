@@ -12,8 +12,8 @@ router.get('/', async function(req, res, next) {
   }
 });
 
-router.get('/viewpost/:postid', async function(req, res, next) {
-  const postId = req.params.postid;
+router.get('/viewpost', async function(req, res, next) {
+  const postId = req.params.id;
   try {
     const [result] = await pool.query("SELECT * FROM Posts WHERE PostID = ?", [postId]);
     if (result.length === 0) {
