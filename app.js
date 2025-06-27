@@ -29,9 +29,10 @@ const limiter = rateLimit({
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-logger.token('ip', (req) => req.ip);
-app.use(logger(":ip - :remote-user [:date[clf]] \":method :url HTTP/:http-version\" :status :res[content-length] \":referrer\" \":user-agent\"", {
-  stream: process.stdout,
+app.set('trust proxy', '127.0.0.1');
+logger.token('ip', (req) => req.ip || req.connection.remoteAddress);
+app.use(logger(':ip - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"', {
+  stream: process.stdout
 }));
 
 app.use(limiter);
