@@ -35,7 +35,7 @@ const limiter = rateLimit({
 app.use(limiter);
 
 const BLOCKED_IPS = new Set(
-  fs.readFileSync('~/ipban.txt', 'utf8')
+  fs.readFileSync(path.join(__dirname, 'ipban.txt'), 'utf8')
     .split('\n')
     .map(ip => ip.trim())
     .filter(ip => ip && !ip.startsWith('#')) // skip empty or commented lines
