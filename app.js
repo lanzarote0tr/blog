@@ -10,7 +10,7 @@ import rateLimit from "express-rate-limit";
 
 import indexRouter from "./routes/index.js";
 import blogRouter from "./routes/blog.js";
-import pool from '/utils/connectdb.js';
+import pool from './utils/connectdb.js';
 
 // __dirname replacement
 const __filename = fileURLToPath(import.meta.url);
