@@ -20,7 +20,7 @@ dotenv.config();
 
 var app = express();
 
-app.set('trust proxy', "127.0.0.1"); // Trust first proxy: Cloudflare
+app.set('trust proxy', 2); // Trust first two proxies: Nginx and Cloudflare
 
 const limiter = rateLimit({
   windowMs: 10 * 1000, // 10 seconds
