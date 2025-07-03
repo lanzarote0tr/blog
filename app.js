@@ -46,7 +46,7 @@ app.use(async function (req, res, next) {
   res.on("finish", async () => {
     // Log to the databse like morgan
     try {
-      await pool.query("INSERT INTO RequestLogs (timestamp, ip, method, url, userAgent, referrer, status, contentLength) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", [new Date(), req.ip, req.method, req.originalUrl, req.get('user-agent'), req.get('referer') || nullt , res.statusCode, res.get('content-length') || 0]);
+      await pool.query("INSERT INTO RequestLogs (timestamp, ip, method, url, userAgent, referrer, status, contentLength) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", [new Date(), req.ip, req.method, req.originalUrl, req.get('user-agent'), req.get('referer') || null , res.statusCode, res.get('content-length') || 0]);
     } catch (err) {
       console.error("Error logging request:", err);
     }
