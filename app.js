@@ -4,12 +4,13 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import cookieParser from "cookie-parser";
-import logger from "morgan";
+// import logger from "morgan";
 import dotenv from "dotenv";
 import rateLimit from "express-rate-limit";
 
 import indexRouter from "./routes/index.js";
 import blogRouter from "./routes/blog.js";
+import pool from '/utils/connectdb.js';
 
 // __dirname replacement
 const __filename = fileURLToPath(import.meta.url);
@@ -29,17 +30,28 @@ const limiter = rateLimit({
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-app.set('trust proxy', '127.0.0.1');
-logger.token('ip', (req) => req.headers['x-forwarded-for'] || req.connection.remoteAddress);
-app.use(logger(':ip - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"', {
-  stream: process.stdout
-}));
+app.set('trust proxy', true);
+// logger.token('ip', (req) => req.headers['x-forwarded-for'] || req.connection.remoteAddress);
+// app.use(logger(':ip - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"', {
+//   stream: process.stdout
+// }));
 
 app.use(limiter);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(async function (req, res, next) {
+  res.on("finish", async () => {
+    // Log to the databse like morgan
+    try {
+      await pool.query("INSERT INTO RequestLogs (timestamp, ip, method, url, userAgent, referrer, status, contentLength) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", [new Date(), req.ip, req.method, req.originalUrl, req.get('user-agent'), req.get('referer') || NULL, res.statusCode, res.get('content-length') || 0]);
+    } catch (err) {
+      console.error("Error logging request:", err);
+    }
+  });
+  next();
+});
 
 // Routing
 app.use("/", indexRouter);
