@@ -30,7 +30,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 app.set('trust proxy', '127.0.0.1');
-logger.token('ip', (req) => req.socket.remoteAddress);
+logger.token('ip', (req) => req.headers['x-forwarded-for'] || req.connection.remoteAddress);
 app.use(logger(':ip - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"', {
   stream: process.stdout
 }));
