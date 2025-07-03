@@ -53,8 +53,8 @@ app.use(function (req, res, next) {
 // error handler
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+  res.locals.message = err.message || "An error occurred";
+  res.locals.error = req.app.get("env") === "development" ? err : {status: err.status || 500, message: "Please contact the administrator to report this issue."};
   switch (err.status) {
     case 404:
       res.locals.title = "Page Not Found";
