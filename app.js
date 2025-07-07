@@ -58,7 +58,9 @@ app.use(async function (req, res, next) {
     next(createError(403, "Your IP address has been blocked."));
     return;
   }
-  res.on("finish", await logger(req, res));
+  res.on("finish", () => {
+    logger(req, res);
+  });
   next();
 });
 
