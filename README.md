@@ -34,3 +34,9 @@ OPENAI_API_KEY="Your OpenAI API Key"
 npm start
 ```
 
+
+## Features / 기능
+
+### Blogger
+
+### Planner
