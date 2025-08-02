@@ -13,7 +13,7 @@ router.get('/', async function(req, res, next) {
 });
 
 router.get('/viewpost', async function(req, res, next) {
-  const postId = req.params.id;
+  const postId = req.query["id"];
   try {
     const [result] = await pool.query("SELECT * FROM Posts WHERE PostID = ?", [postId]);
     if (result.length === 0) {
