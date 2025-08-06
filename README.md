@@ -39,4 +39,10 @@ npm start
 
 ### Blogger
 
+1. Create Post
+2. View Post -- No Auth
+3. Update Post
+4. Delete Post
+
+
 ### Planner
