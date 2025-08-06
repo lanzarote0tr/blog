@@ -86,13 +86,15 @@ app.use(function (req, res, next) {
 // error handler
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
-  parsed_error = {
+  var parsed_error = {
     name: "",
     message: "",
     stack: "",
     status: err.status || 500,
   };
-  console.error("Error:", err);
+  if (err.status >= 500) {
+    console.error("Error:", err);
+  }
   if (req.app.get("env") === "development") {
     parsed_error.name = err.name || "Error";
     parsed_error.message = err.message || "An unexpected error occurred.";
