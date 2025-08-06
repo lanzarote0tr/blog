@@ -86,25 +86,35 @@ app.use(function (req, res, next) {
 // error handler
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
-  switch (err.status) {
-    case 403:
-      res.locals.title = "Forbidden";
-      res.locals.message = err.message || "You do not have permission to access this resource.";
-      break;
-    case 404:
-      res.locals.title = "Page Not Found";
-      break;
-    case 500:
-    default:
-      res.locals.title = "Internal Server Error";
+  var parsed_error = {
+    name: "",
+    message: "",
+    stack: "",
+    status: err.status || 500,
+  };
+  if (err.status >= 500) {
+    console.error("Error:", err);
+  }
+  if (req.app.get("env") === "development") {
+    parsed_error.name = err.name || "Error";
+    parsed_error.message = err.message || "An unexpected error occurred.";
+    parsed_error.stack = err.stack || "";
+  } else {
+    if (parsed_error.status == 403) {
+      parsed_error.name = "Forbidden";
+      parsed_error.message = "You do not have permission to access this resource.";
+    } else if (parsed_error.status < 500) {
+      parsed_error.name = err.name || "Client Error";
+      parsed_error.message = err.message || "An error occurred. Please try again later.";
+    } else {
+      parsed_error.name = "Internal Server Error";
+      parsed_error.message = "Please contact the site administrator.";
+    }
   }
 
-  res.locals.message = err.message || "An error occurred";
-  res.locals.error = req.app.get("env") === "development" ? err : {status: err.status || 500, message: "Please contact the administrator to report this issue."};
-
   // render the error page
-  res.status(err.status || 500);
-  res.render("error");
+  res.status(parsed_error.status);
+  res.render("error", { error: parsed_error });
 });
 
 export default app;
