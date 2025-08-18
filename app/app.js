@@ -13,13 +13,6 @@ import blogRouter from "./routes/blog.js";
 import pool from './utils/connectdb.js';
 import fs from 'fs';
 
-var a = {
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-}
-console.log(a)
 
 // __dirname
 const __filename = fileURLToPath(import.meta.url);
