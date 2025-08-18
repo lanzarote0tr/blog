@@ -4,8 +4,8 @@ services:
     build: ./mysql
     env_file: ./.env
     volumes:
-      - ./mysql/init/01-schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
       - dbdata:/var/lib/mysql
+      - ./mysql/init/:/docker-entrypoint-initdb.d/
     healthcheck:
       test:
         - CMD-SHELL
