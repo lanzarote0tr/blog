@@ -1,44 +1,32 @@
-## Getting Started / 시작하기
+## Getting Started
 
-### Prerequisites / 필요한 프로그램
-
+### Prerequisites
 ```
-Node.js
-```
-
-### How to start the server / 서버를 시작하는 방법
-
-1. Install dependencies
-```sh
-npm install
+Docker
 ```
 
-2. Write .env file
-```
+### Write .env file on project root
+```env
 MYSQL_ROOT_PASSWORD=
-
-DB_PORT=blog
-DB_USER=
-DB_PASSWORD=
-
 NODE_ENV=production
 PORT=3000
-
 DB_PORT=3306
 DB_USER=
 DB_PASSWORD=
-DB_DATABASE=
-
 SESSION_SECRET=
 ```
 
-3. Start server
+### How to start the server
 ```sh
-npm start
+docker compose up
 ```
 
+### How to delete docker instance
+```sh
+docker compose down -rmi all --volumes --remove-orphans
+```
 
-## Features / 기능
+## Features
 
 ### Blogger
 
