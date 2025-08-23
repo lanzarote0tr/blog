@@ -17,9 +17,9 @@ npm install
 ```
 MYSQL_ROOT_PASSWORD=
 
-APP_DB=blog
-APP_USER=
-APP_PASSWORD=
+DB_PORT=blog
+DB_USER=
+DB_PASSWORD=
 
 NODE_ENV=production
 PORT=3000

@@ -10,7 +10,7 @@ services:
       test:
         - CMD-SHELL
         - >
-          mysql -uroot -p"${MYSQL_ROOT_PASSWORD}" -Nse "SELECT ok FROM ${APP_DB}.__init_ok LIMIT 1" | grep -qx 1
+          mysql -uroot -p"${MYSQL_ROOT_PASSWORD}" -Nse "SELECT ok FROM ${DB_DATABASE}.__init_ok LIMIT 1" | grep -qx 1
       interval: 2s
       timeout: 5s
       retries: 10
