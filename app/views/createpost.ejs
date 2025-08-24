@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Post List.</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+  <div id="banner">
+      <img src="/images/MUNZIE.png" alt="" id="banner-img">
+      <a href="/" id="mainpage-link">Hello</a>
+      <a href="/blog" id="blogpage-link">Blog</a>
+  </div>
+  <div class="post">
+    <h1>Create Post</h1>
+    <form action="/blog/createpost" method="POST">
+      <label for="title">Title:</label><br>
+      <input type="text" id="title" name="title" required><br><br>
+      <label for="content">Content:</label><br>
+      <textarea id="content" name="content" rows="8" cols="50" required></textarea><br><br>
+      <button type="submit">Submit Post</button>
+    </form> 
+  </div>
+</body>
+</html>

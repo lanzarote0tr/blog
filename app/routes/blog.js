@@ -25,6 +25,10 @@ router.get('/', async function(req, res, next) {
   }
 });
 
+router.get('/createpost', async function(req, res, next) {
+  res.render('createpost');
+})
+
 router.post('/createpost', async function(req, res, next) {
   const { title, content } = req.body;
   if (!title || !content) {
@@ -55,7 +59,7 @@ router.get('/viewpost', async function(req, res, next) {
       Title: result[0].Title || "",
       Content: result[0].Content || "",
       Author_id: result[0].Author_id || 0,
-      Updated_at: formatDate(result[0].Updated_at) || "",
+      Created_at: formatDate(result[0].Created_at) || "",
     }
     res.render('viewpost', { post: data });
   } catch(err) {

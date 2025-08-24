@@ -1,7 +1,6 @@
 services:
   db:
     image: mysql:8.4
-    build: ./mysql
     env_file: ./.env
     volumes:
       - dbdata:/var/lib/mysql
